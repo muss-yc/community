@@ -1,3 +1,8 @@
 spring:
   thymeleaf:
     cache: false
+
+oauth:
+  client_id: 6816431ab51981c79b94
+  client_secret: 890f3d609974b887737f1d656f5e12925d15d8c1
+  redirect_url: http://localhost:8080/callback
