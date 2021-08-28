@@ -47,7 +47,7 @@ public class AuthorizeController {
             // 设置User对象并保存到数据库中
             User user = new User(githubUser.getId(),githubUser.getName(),token,new Date(),new Date());
             userService.save(user);
-            // 将token存入到cookie中
+            // 将token存入到cookie里面
             response.addCookie(new Cookie("token",token));
 
         }
