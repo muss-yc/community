@@ -1,8 +1,19 @@
 spring:
   thymeleaf:
     cache: false
+  datasource:
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql:///community?useUnicode=true&characterEncoding=UTF-8&useSSL=true
+
+mybatis-plus:
+  type-aliases-package: com.mousse.entity
 
 oauth:
   client_id: 6816431ab51981c79b94
-  client_secret: 890f3d609974b887737f1d656f5e12925d15d8c1
+  client_secret: 8edd3a1040035ab6b66d02ce02702044291a893c
   redirect_url: http://localhost:8080/callback
+logging:
+  level:
+    com.mousse.mapper: debug
