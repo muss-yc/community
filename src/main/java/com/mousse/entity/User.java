@@ -2,10 +2,15 @@ package com.mousse.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
     @TableId(type = IdType.AUTO)
@@ -15,63 +20,14 @@ public class User {
     private String token;
     private Date gmtCreate;
     private Date gmtModified;
+    private String avatarUrl;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(String accountId) {
-        this.accountId = accountId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public Date getGmtCreate() {
-        return gmtCreate;
-    }
-
-    public void setGmtCreate(Date gmtCreate) {
-        this.gmtCreate = gmtCreate;
-    }
-
-    public Date getGmtModified() {
-        return gmtModified;
-    }
-
-    public void setGmtModified(Date gmtModified) {
-        this.gmtModified = gmtModified;
-    }
-
-    public User() {
-    }
-
-    public User(String accountId, String name, String token, Date gmtCreate, Date gmtModified) {
+    public User(String accountId, String name, String token, Date gmtCreate, Date gmtModified, String avatarUrl) {
         this.accountId = accountId;
         this.name = name;
         this.token = token;
         this.gmtCreate = gmtCreate;
         this.gmtModified = gmtModified;
+        this.avatarUrl = avatarUrl;
     }
 }

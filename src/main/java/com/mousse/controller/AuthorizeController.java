@@ -45,11 +45,10 @@ public class AuthorizeController {
             // 设置token
             String token = UUID.randomUUID().toString();
             // 设置User对象并保存到数据库中
-            User user = new User(githubUser.getId(),githubUser.getName(),token,new Date(),new Date());
+            User user = new User(githubUser.getId(),githubUser.getName(),token,new Date(),new Date(),githubUser.getAvatar_url());
             userService.save(user);
             // 将token存入到cookie里面
             response.addCookie(new Cookie("token",token));
-
         }
         // 重定向到首页
         return "redirect:/";
