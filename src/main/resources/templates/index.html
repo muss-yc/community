@@ -78,7 +78,7 @@
                         </a>
                     </li>
 
-                    <!-- 遍历出所在页前三页到后三页 -->
+                    <!-- 遍历出所在页的前三页到后三页 -->
                     <li  th:class="${x == current} ? active : ''" th:each=" x : ${#numbers.sequence(((current.longValue()-3)>0 ? current.longValue()-3:1),((current+3)>pageCount ?pageCount:current+3))}">
                         <a  th:href="@{/(current=${x})}"  th:text="${x}">1</a>
                     </li>
