@@ -1,9 +1,11 @@
 package com.mousse.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mousse.dto.QuestionDTO;
 import com.mousse.entity.Question;
+import com.mousse.dto.UserDTO;
 import com.mousse.mapper.QuestionMapper;
 import com.mousse.service.QuestionService;
 import com.mousse.service.UserService;
@@ -39,6 +41,25 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
             listQuestionDTO.add(questionDTO);
         }
         map.put("questionList",listQuestionDTO);
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> listUserDTO(int id, Page<Question> page) {
+        QueryWrapper<Question> wrapper = new QueryWrapper<>();
+        wrapper.eq("creator",id);
+        Page<Question> questionPage = baseMapper.selectPage(page, wrapper);
+        List<Question> questions = questionPage.getRecords();
+        UserDTO userDTO = new UserDTO();
+        userDTO.setQuestions(questions);
+        userDTO.setUser(userService.getById(id));
+        // 获取所在页，总页数
+        long current = questionPage.getCurrent();
+        long total = questionPage.getTotal();
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("current",current);
+        map.put("total",total);
+        map.put("userDTO",userDTO);
         return map;
     }
 }

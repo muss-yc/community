@@ -1,52 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>慕斯社区</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="css/community.css">
-    <script src="js/jquery-3.5.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+<head th:replace="~{commonCode::common_head('发布问题-慕斯社区')}">
+    <title></title>
 </head>
 <body>
 <!-- 导航栏 -->
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <!-- 首页 -->
-        <div class="navbar-header">
-            <a class="navbar-brand" th:href="@{/}">慕斯社区</a>
-        </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <!-- 搜索框 -->
-            <form class="navbar-form navbar-left">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="搜索问题">
-                </div>
-                <button type="submit" class="btn btn-default">搜索</button>
-            </form>
-            <!-- 登录与 我的 -->
-            <ul class="nav navbar-nav navbar-right">
-                <li th:if="${session.user == null}">
-                    <a href="https://github.com/login/oauth/authorize?client_id=6816431ab51981c79b94&redirect_uri=http://localhost:8080/callback&scope=user&state=1">登录</a>
-                </li>
-                <li th:unless="${session.user == null}">
-                    <a th:href="@{/publish}">发布问题</a>
-                </li>
-                <li class="dropdown" th:unless="${session.user == null}">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="${session.user.getName()}">
-                        我 <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">消息中心</a></li>
-                        <li><a href="#">个人资料</a></li>
-                        <li><a href="#">推出登录</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<div th:replace="~{commonCode::common_navigation}"></div>
 <!-- 发布页 -->
 <div class="container-fluid main">
     <div class="row">

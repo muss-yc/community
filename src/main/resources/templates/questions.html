@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{commonCode::common_head('我的问题-慕斯社区')}">
+    <title></title>
+</head>
+<body>
+<!-- 导航栏 -->
+<div th:replace="commonCode::common_navigation"></div>
+<!-- 主体 -->
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-xs-12 col-sm-12">
+            <h3><span class="glyphicon glyphicon-tasks" aria-hidden="true" th:text="${sectionName}"> 我关注的问题</span></h3>
+            <hr>
+            <div class="media" th:each="question : ${userDTO.questions}">
+                <div class="media-left media-middle">
+                    <a href="#">
+                        <img class="media-object img-rounded" th:src="${userDTO.user.avatarUrl}" alt="" src="">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading" th:text="${question.title}">快速开始</h4>
+                    [[${question.description}]]<br/>
+                    <span class="text-desc">
+                        • [[${question.commentCount}]]个回复 • [[${question.viewCount}]]次浏览 • 于[[${#dates.format(question.gmtModified,'yyyy年MM月dd日HH时')}]]发布
+                    </span>
+                </div>
+            </div>
+            <!-- 分页 -->
+            <nav aria-label="Page navigation" style="text-align: center">
+                <ul class="pagination" >
+                    <!-- 跳转到所在页的前一页和第一页 -->
+                    <li th:if="${current != 1}">
+                        <a  aria-label="Previous" th:href="@{/mine/questions(current=1)}" >
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                        <a th:href="@{/mine/questions(current=${current.longValue()-1})}">
+                            <span aria-hidden="true">&lt;</span>
+                        </a>
+                    </li>
+
+                    <!-- 遍历出所在页的前三页到后三页 -->
+                    <li  th:class="${x == current} ? active : ''" th:each=" x : ${#numbers.sequence(((current.longValue()-3)>0 ? current.longValue()-3:1),((current+3)>pageCount ?pageCount:current+3))}">
+                        <a  th:href="@{/mine/questions(current=${x})}"  th:text="${x}">1</a>
+                    </li>
+                    <!-- 跳转到所在页的后一页和最后一页 -->
+                    <li th:if="${current != pageCount}">
+                        <a th:href="@{/mine/questions(current=${current+1})}">
+                            <span aria-hidden="true">&gt;</span>
+                        </a>
+                        <a aria-label="Next" th:href="@{/mine/questions(current=${pageCount})}">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <!-- 右侧列表 -->
+        <div class="col-lg-3 col-md-12 col-xs-12 col-sm-12" style="margin-top: 20px;border-left:1px #d9c0c0 solid ">
+            <div class="list-group">
+                <a th:href="@{/mine/draft}" class="list-group-item" th:classappend="${section == 'draft'} ? 'active' : ''">
+                    <span class="glyphicon glyphicon-file"> 我的草稿</span>
+                    <span class="badge">14</span>
+                </a>
+                <a th:href="@{/mine/questions}" class="list-group-item" th:classappend="${section == 'questions'} ? 'active' : ''">
+                    <span class="glyphicon glyphicon-paperclip"> 我的问题</span>
+                    <span class="badge">14</span>
+                </a>
+                <a th:href="@{/mine/collect}" class="list-group-item" th:classappend="${section == 'collect'} ? 'active' : ''">
+                    <span class="glyphicon glyphicon-star"> 我的收藏</span>
+                    <span class="badge">14</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
