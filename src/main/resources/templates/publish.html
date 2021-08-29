@@ -61,7 +61,7 @@
                 </div>
                 <div class="form-group">
                     <label for="description">问题描述(必填)</label>
-                    <textarea class="form-control" rows="10" th:value="${question!=null?question.description:''}" name="description" id="description" cols="30"></textarea>
+                    <textarea class="form-control" rows="10" th:text="${question!=null?question.description:''}" name="description" id="description" cols="30"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="tag">添加标签</label>

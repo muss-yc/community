@@ -1,14 +1,13 @@
 package com.mousse.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-
-import com.mousse.dto.QuestionDTO;
 import com.mousse.entity.Question;
 
-import java.util.List;
+import java.util.Map;
 
 
 public interface QuestionService extends IService<Question> {
 
-    List<QuestionDTO> listQuestionDTO();
+    Map<String,Object> listQuestionDTO(Page<Question> page);
 }
