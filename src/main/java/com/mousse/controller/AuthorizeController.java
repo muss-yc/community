@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
@@ -45,8 +46,14 @@ public class AuthorizeController {
             // 设置token
             String token = UUID.randomUUID().toString();
             // 设置User对象并保存到数据库中
-            User user = new User(githubUser.getId(),githubUser.getName(),token,new Date(),new Date(),githubUser.getAvatar_url());
-            userService.save(user);
+            User user = userService.getByAccountId(githubUser.getId());
+            if (user != null) {
+                user.setToken(token);
+                userService.update(user,null);
+            } else {
+                User saveUser = new User(githubUser.getId(), githubUser.getName(), token, new Date(), new Date(), githubUser.getAvatar_url());
+                userService.save(saveUser);
+            }
             // 将token存入到cookie里面
             response.addCookie(new Cookie("token",token));
         }

@@ -6,4 +6,7 @@
     <select id="selectByToken" resultType="User">
         select * from user where token = #{token}
     </select>
+    <select id="selectByAccountId" resultType="com.mousse.entity.User">
+        select * from user where account_id = #{id}
+    </select>
 </mapper>

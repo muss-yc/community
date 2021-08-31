@@ -50,7 +50,7 @@ public class MineController {
         model.addAttribute("current",current);
         UserDTO userDTO = (UserDTO) map.get("userDTO");
         model.addAttribute("userDTO",userDTO);
-        return "questions";
+        return "questionList";
     }
 
 }

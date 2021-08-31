@@ -31,3 +31,7 @@ body{
 .list-group .active, .list-group-item.active:hover{
     background-image: linear-gradient(to bottom,#2ecfc8 0,#28a6ac 100%);
 }
+.mouse-hover:hover{
+    color: #28a6ac;
+    text-decoration: none;
+}

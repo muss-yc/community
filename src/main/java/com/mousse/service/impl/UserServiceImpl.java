@@ -12,4 +12,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public User getByToken(String value) {
         return baseMapper.selectByToken(value);
     }
+
+    @Override
+    public User getByAccountId(String id) {
+        return baseMapper.selectByAccountId(id);
+    }
 }

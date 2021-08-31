@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{commonCode::common_head('错误页面')}">
+    <meta charset="UTF-8">
+    <title>出现错误</title>
+</head>
+<body>
+<div class="jumbotron" style="text-align: center">
+    <h2>服务器迷路了</h2>
+    <p th:text="${message}">...</p>
+    <p><a class="btn btn-success btn-lg" th:href="@{/}" role="button">点击返回首页</a></p>
+</div>
+</body>
+</html>

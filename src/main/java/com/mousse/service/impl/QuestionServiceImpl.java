@@ -4,8 +4,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mousse.dto.QuestionDTO;
-import com.mousse.entity.Question;
 import com.mousse.dto.UserDTO;
+import com.mousse.entity.Question;
+import com.mousse.entity.User;
+import com.mousse.exception.CustomizeErrorCode;
+import com.mousse.exception.CustomizeException;
 import com.mousse.mapper.QuestionMapper;
 import com.mousse.service.QuestionService;
 import com.mousse.service.UserService;
@@ -52,7 +55,8 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
         List<Question> questions = questionPage.getRecords();
         UserDTO userDTO = new UserDTO();
         userDTO.setQuestions(questions);
-        userDTO.setUser(userService.getById(id));
+        User user = userService.getById(id);
+        userDTO.setUser(user);
         // 获取所在页，总页数
         long current = questionPage.getCurrent();
         long total = questionPage.getTotal();
@@ -62,4 +66,17 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
         map.put("userDTO",userDTO);
         return map;
     }
+
+    @Override
+    public QuestionDTO getQuestionDTOById(int id) {
+        Question question = baseMapper.selectById(id);
+        if (question == null) {
+            throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+        }
+        QuestionDTO questionDTO = new QuestionDTO();
+        questionDTO.setQuestion(question);
+        return questionDTO;
+    }
+
+
 }

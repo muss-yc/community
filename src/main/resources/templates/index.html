@@ -19,7 +19,9 @@
                     </a>
                 </div>
                 <div class="media-body">
-                    <h4 class="media-heading" th:text="${question.question.title}">快速开始</h4>
+                    <a th:href="@{/question/{id}(id=${question.question.id})}" class="mouse-hover">
+                        <h4 class="media-heading" th:text="${question.question.title}">快速开始</h4>
+                    </a>
                     [[${question.question.description}]]<br/>
                     <span class="text-desc">
                         • [[${question.question.commentCount}]]个回复 • [[${question.question.viewCount}]]次浏览 • 于[[${#dates.format(question.question.gmtModified,'yyyy年MM月dd日HH时')}]]发布

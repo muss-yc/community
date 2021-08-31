@@ -10,10 +10,12 @@
 <div class="container-fluid main">
     <div class="row">
         <div class="col-lg-9 col-md-12 col-xs-12 col-sm-12">
-            <h3><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>发起问题</h3>
+            <h3><span class="glyphicon glyphicon-edit" aria-hidden="true" th:if="${question!= null && question.id != null}">修改问题</span></h3>
+            <h3><span class="glyphicon glyphicon-plus" aria-hidden="true" th:unless="${question!= null && question.id != null}">发起问题</span></h3>
             <hr>
             <h4 style="color:red;text-align: center">[[${error}]]</h4>
             <form th:action="@{/publish}" method="post">
+                <input type="hidden" th:value="${question.id}" name="id">
                 <div class="form-group">
                     <label for="title">问题标题</label>
                     <input type="text" class="form-control" th:value="${question!=null?question.title:''}" name="title" id="title" placeholder="请输入问题标题...">
