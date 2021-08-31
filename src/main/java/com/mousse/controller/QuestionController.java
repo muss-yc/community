@@ -1,8 +1,6 @@
 package com.mousse.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.mousse.dto.QuestionDTO;
-import com.mousse.entity.Question;
 import com.mousse.entity.User;
 import com.mousse.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +25,7 @@ public class QuestionController {
     public String question(@PathVariable("id") int id, HttpServletRequest request, Model model){
 
         // 设置浏览数
-        Question question = questionService.getById(id);
-        question.setViewCount(question.getViewCount()+1);
-        QueryWrapper<Question> wrapper = new QueryWrapper<>();
-        wrapper.eq("id",id);
-        questionService.update(question, wrapper);
+        questionService.updateViewCountById(id);
         QuestionDTO questionDTO = questionService.getQuestionDTOById(id);
         User user = (User) request.getSession().getAttribute("user");
         questionDTO.setUser(user);

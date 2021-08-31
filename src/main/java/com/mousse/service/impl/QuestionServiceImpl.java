@@ -7,7 +7,7 @@ import com.mousse.dto.QuestionDTO;
 import com.mousse.dto.UserDTO;
 import com.mousse.entity.Question;
 import com.mousse.entity.User;
-import com.mousse.exception.CustomizeErrorCode;
+import com.mousse.enums.CustomizeErrorCode;
 import com.mousse.exception.CustomizeException;
 import com.mousse.mapper.QuestionMapper;
 import com.mousse.service.QuestionService;
@@ -78,5 +78,14 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
         return questionDTO;
     }
 
+    @Override
+    public void updateViewCountById(int id) {
+        baseMapper.updateViewCountById(id);
 
+    }
+
+    @Override
+    public void updateCommentCountById(int parent_id) {
+        baseMapper.updateCommentCountById(parent_id);
+    }
 }

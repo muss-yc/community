@@ -15,4 +15,8 @@ public interface QuestionService extends IService<Question> {
     Map<String, Object> listUserDTO(int id, Page<Question> page);
 
     QuestionDTO getQuestionDTOById(int id);
+
+    void updateViewCountById(int id);
+
+    void updateCommentCountById(int parent_id);
 }

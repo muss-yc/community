@@ -1,10 +1,12 @@
-package com.mousse.exception;
+package com.mousse.enums;
+
+import com.mousse.exception.ICustomizeErrorCode;
 
 /**
  * @author mousse
  * @data 2021/8/30
  */
-public enum CustomizeErrorCode implements ICustomizeErrorCode{
+public enum CustomizeErrorCode implements ICustomizeErrorCode {
 
     QUESTION_NOT_FOUND(2001, "你找到问题不在了，要不要换个试试？"),
     TARGET_PARAM_NOT_FOUND(2002, "未选中任何问题或评论进行回复"),

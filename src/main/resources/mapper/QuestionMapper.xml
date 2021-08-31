@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mousse.mapper.QuestionMapper">
+
+
+    <update id="updateViewCountById">
+        update question q1
+            inner join (select view_count from question where id = #{id}) q2
+        set q1.view_count = q2.view_count + 1
+        where q1.id = #{id}
+    </update>
+    <update id="updateCommentCountById">
+        update question q1
+            inner join (select comment_count from question where id = #{id}) q2
+        set q1.comment_count = q2.comment_count + 1
+        where q1.id = #{id}
+    </update>
+</mapper>
