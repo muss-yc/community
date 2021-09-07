@@ -14,6 +14,7 @@ import com.mousse.service.QuestionService;
 import com.mousse.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,6 +27,7 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
     @Autowired
     private UserService userService;
 
+    @Transactional
     public Map<String,Object> listQuestionDTO(Page<Question> page) {
         Page<Question> questionPage = baseMapper.selectPage(page, null);
         List<Question> questions = questionPage.getRecords();
@@ -48,6 +50,7 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
     }
 
     @Override
+    @Transactional
     public Map<String, Object> listUserDTO(int id, Page<Question> page) {
         QueryWrapper<Question> wrapper = new QueryWrapper<>();
         wrapper.eq("creator",id);

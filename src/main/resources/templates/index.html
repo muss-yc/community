@@ -4,6 +4,16 @@
     <title></title>
 </head>
 <body>
+<script type="application/javascript">
+    window.onload = function () {
+        let closable = window.localStorage.getItem("closable");
+        if (closable === "true") {
+            window.close();
+            window.localStorage.removeItem("closable");
+            window.localStorage.setItem("reload","true");
+        }
+    }
+</script>
 <!-- 导航栏 -->
 <div th:replace="commonCode::common_navigation"></div>
 <!-- 主体 -->

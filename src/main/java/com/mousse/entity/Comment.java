@@ -23,6 +23,7 @@ public class Comment {
     private int id;
     private int parentId;
     private int commentator;
+    private int userId;
     private Date gmtCreate;
     private Date gmtModified;
     @TableField(insertStrategy = FieldStrategy.NEVER)

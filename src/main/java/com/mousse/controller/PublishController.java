@@ -46,7 +46,7 @@ public class PublishController {
             model.addAttribute("error","确定标题，描述，标签是否填写！");
             return "publish";
         }
-        if (StringUtils.isNotBlank(String.valueOf(question.getId()))) {
+        if (question.getId() != null) {
             QueryWrapper<Question> wrapper = new QueryWrapper<>();
             wrapper.eq("id",question.getId());
             questionService.update(question,wrapper);

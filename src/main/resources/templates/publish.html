@@ -15,7 +15,7 @@
             <hr>
             <h4 style="color:red;text-align: center">[[${error}]]</h4>
             <form th:action="@{/publish}" method="post">
-                <input type="hidden" th:value="${question.id}" name="id">
+                <input type="hidden" th:value="${question != null ? question.id : ''}" name="id" >
                 <div class="form-group">
                     <label for="title">问题标题</label>
                     <input type="text" class="form-control" th:value="${question!=null?question.title:''}" name="title" id="title" placeholder="请输入问题标题...">

@@ -35,3 +35,10 @@ body{
     color: #28a6ac;
     text-decoration: none;
 }
+.comment-a {
+    color: #c0c3c6;
+    cursor: pointer;
+}
+.comment-a:hover {
+    color: #2ecfc8;
+}

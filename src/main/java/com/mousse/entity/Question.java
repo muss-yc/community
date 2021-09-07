@@ -14,7 +14,7 @@ import java.util.Date;
 public class Question {
 
     @TableId(type = IdType.AUTO)
-    private int id;
+    private Integer id;
     private String title;
     private String description;
     private Date gmtCreate;

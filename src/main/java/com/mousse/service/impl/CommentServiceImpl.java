@@ -11,6 +11,9 @@ import com.mousse.service.CommentService;
 import com.mousse.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * @author mousse
@@ -22,6 +25,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     @Autowired
     private QuestionService questionService;
 
+    @Transactional
     public void insert(Comment comment) {
         if (comment.getParentId() == 0) throw new CustomizeException(CustomizeErrorCode.TARGET_PARAM_NOT_FOUND);
         if (comment.getType() == null || !CommentTypeEnum.isExist(comment.getType())) throw new CustomizeException(CustomizeErrorCode.TYPE_PARAM_WRONG);
@@ -37,6 +41,13 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         baseMapper.insert(comment);
         questionService.updateCommentCountById(comment.getParentId());
 
+    }
+
+    @Override
+    public List<Comment> getByParentId(int id) {
+        List<Comment> commentList = baseMapper.selectBatchParentIds(id);
+        if (commentList == null) throw new CustomizeException(CustomizeErrorCode.TARGET_PARAM_NOT_FOUND);
+        return commentList;
     }
 
 }
