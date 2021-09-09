@@ -29,8 +29,11 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
 
     @Transactional
     public Map<String,Object> listQuestionDTO(Page<Question> page) {
-        Page<Question> questionPage = baseMapper.selectPage(page, null);
+        QueryWrapper<Question> wrapper = new QueryWrapper<>();
+        wrapper.orderByDesc("gmt_create");
+        Page<Question> questionPage = baseMapper.selectPage(page, wrapper);
         List<Question> questions = questionPage.getRecords();
+
         // 获取所在页，总页数
         long current = questionPage.getCurrent();
         long total = questionPage.getTotal();

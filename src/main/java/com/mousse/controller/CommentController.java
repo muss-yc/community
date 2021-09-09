@@ -1,21 +1,25 @@
 package com.mousse.controller;
 
-import com.mousse.dto.Result;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.mousse.dto.CommentDTO;
+import com.mousse.dto.CommentVO;
+import com.mousse.dto.Result;
 import com.mousse.entity.Comment;
 import com.mousse.entity.User;
 import com.mousse.enums.CustomizeErrorCode;
+import com.mousse.exception.CustomizeException;
 import com.mousse.service.CommentService;
+import com.mousse.service.UserService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author mousse
@@ -26,6 +30,8 @@ public class CommentController {
 
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private UserService userService;
 
     @PostMapping("/comment")
     @ResponseBody
@@ -40,7 +46,33 @@ public class CommentController {
         comment.setGmtModified(new Date());
         comment.setCommentator(1);
         commentService.insert(comment);
+        if (commentDTO.getType() == 2){
+            int parentId = commentDTO.getParentId();
+            Comment commentServiceById = commentService.getById(parentId);
+            commentServiceById.setCommentCount(commentServiceById.getCommentCount()+1);
+            QueryWrapper<Comment> wrapper = new QueryWrapper<>();
+            wrapper.eq("id",parentId);
+            commentService.update(commentServiceById,wrapper);
+        }
         return Result.ok(comment);
+    }
+
+    @GetMapping("/comment/{id}")
+    @ResponseBody
+    public Result comments(@PathVariable("id")int id ){
+        Comment commentServiceById = commentService.getById(id);
+        if (commentServiceById == null) throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
+        List<Comment> commentList = commentService.getByParentId(id);
+        List<CommentVO> commentVOList = new ArrayList<>();
+        for (Comment comment : commentList) {
+            CommentVO commentVO = new CommentVO();
+            commentVO.setComment(comment);
+            int commentUserId = comment.getUserId();
+            User user1 = userService.getById(commentUserId);
+            commentVO.setUser(user1);
+            commentVOList.add(commentVO);
+        }
+        return Result.ok(commentVOList);
     }
 
 }

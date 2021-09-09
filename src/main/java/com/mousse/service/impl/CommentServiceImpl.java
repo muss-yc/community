@@ -31,7 +31,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         if (comment.getType() == null || !CommentTypeEnum.isExist(comment.getType())) throw new CustomizeException(CustomizeErrorCode.TYPE_PARAM_WRONG);
         if (comment.getType().equals(CommentTypeEnum.COMMENT.getType())) {
             // 回复评论
-            Comment dbComment = baseMapper.selectById(comment.getId());
+            Comment dbComment = baseMapper.selectById(comment.getParentId());
             if (dbComment == null) throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
         } else {
             // 回复问题

@@ -29,6 +29,7 @@ public class Comment {
     @TableField(insertStrategy = FieldStrategy.NEVER)
     private int likeCount;
     private String content;
+    private int commentCount;
     @TableField(exist = false)
     private Integer type;
 }
