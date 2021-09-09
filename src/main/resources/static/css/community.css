@@ -79,3 +79,14 @@ a.list-group-item, button.list-group-item{
 .list-group{
     box-shadow: 0 0 0 0 !important;
 }
+.demo_line_01 {
+    width: 100%;
+    padding: 0 20px 0;
+    margin: 20px 0;
+    line-height: 1px;
+    border-left: 400px solid #ddd;
+    border-right: 400px solid #ddd;
+    text-align: center;
+    font-size: 20px;
+    color: #326f82;
+}
