@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.mousse.dto.QuestionDTO;
 import com.mousse.entity.Question;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -19,4 +20,6 @@ public interface QuestionService extends IService<Question> {
     void updateViewCountById(int id);
 
     void updateCommentCountById(int parent_id);
+
+    List<Question> selectTagsRegular(String tags,int id);
 }

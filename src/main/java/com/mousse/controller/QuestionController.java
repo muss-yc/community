@@ -3,6 +3,7 @@ package com.mousse.controller;
 import com.mousse.dto.CommentVO;
 import com.mousse.dto.QuestionDTO;
 import com.mousse.entity.Comment;
+import com.mousse.entity.Question;
 import com.mousse.entity.User;
 import com.mousse.service.CommentService;
 import com.mousse.service.QuestionService;
@@ -53,6 +54,14 @@ public class QuestionController {
             commentVOList.add(commentVO);
         }
         model.addAttribute("commentVOList",commentVOList);
+        // 设置相关问题列表
+        Question question = questionService.getById(id);
+        String tag = question.getTag();
+        String tags = tag.replace(",", "|");
+        List<Question> questionList =  questionService.selectTagsRegular(tags,id);
+        // 如果相关问题超出10个，便只取10个
+        if (questionList.size() > 10) questionList = questionList.subList(0,10);
+        model.addAttribute("questionList",questionList);
         return "question";
     }
 

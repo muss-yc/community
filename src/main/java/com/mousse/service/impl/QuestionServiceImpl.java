@@ -85,6 +85,11 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
     }
 
     @Override
+    public List<Question> selectTagsRegular(String tags,int id) {
+        return baseMapper.selectByTags(tags,id);
+    }
+
+    @Override
     public void updateViewCountById(int id) {
         baseMapper.updateViewCountById(id);
 

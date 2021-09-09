@@ -15,8 +15,7 @@
             <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 ">
                 <h3><span aria-hidden="true" th:text="${questionDTO.question.title}"> 我关注的问题</span></h3>
                 <h4 class="text-desc">
-                    <span th:text="${questionDTO.question.tag}" style="background-color: #dbcfcf"></span>
-                    | 作者 <a th:href="@{/}" th:text="${questionDTO.user.name}"></a>
+                    作者 <a th:href="@{/}" th:text="${questionDTO.user.name}"></a>
                     | 发布时间于[[${#dates.format(questionDTO.question.gmtCreate,'yyyy年MM月dd日')}]]
                     | 阅读数：[[${questionDTO.question.viewCount}]]
                 </h4>
@@ -24,6 +23,14 @@
                 <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 " th:text="${questionDTO.question.description}"></div>
                 <br>
                 <hr>
+                <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 ">
+                    <span class="label label-info" th:each="tag : ${#strings.arraySplit(questionDTO.question.tag,',')}" style="margin-right: 5px">
+                        <span class="glyphicon glyphicon-tags" style="margin-right: 3px"></span>
+                        <span th:text="${tag}" ></span>
+                    </span>
+                    <hr>
+                </div>
+
                 <a th:href="@{/publish/{id}(id=${questionDTO.question.id})}" th:if="${session.user != null && session.user.id == questionDTO.user.id}">
                     <span class="glyphicon glyphicon-pencil text-desc mouse-hover" style="font-size: 14px">编辑</span>
                 </a>
@@ -87,6 +94,9 @@
             <hr class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
             <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 " style="padding-left: 30px">
                 <h4 style="color:#7ae0d2;">相关问题</h4>
+                <div class="list-group" >
+                    <a href="#" class="list-group-item a-hover"  th:each="relatedQuesiton : ${questionList}" th:text="${relatedQuesiton.title}"></a>
+                </div>
             </div>
         </div>
 
