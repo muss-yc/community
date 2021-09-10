@@ -18,25 +18,30 @@
 <div th:replace="commonCode::common_navigation"></div>
 <!-- 主体 -->
 <div class="container-fluid main">
-    <div class="row">
-        <div class="col-lg-9 col-md-12 col-xs-12 col-sm-12">
+    <div class="row" style="background-color: #e5eaec">
+        <!-- 左侧问题列表 -->
+        <div class="col-lg-8 col-md-12 col-xs-12 col-sm-12"  style="background-color: white;padding-left: 30px;border-radius: 15px;margin-left: 40px">
             <h3><span class="glyphicon glyphicon-th-list" aria-hidden="true"> 发现</span></h3>
             <hr>
+            <!-- 问题 -->
             <div class="media" th:each="question : ${questions}">
+                <!-- 头像 -->
                 <div class="media-left media-middle">
                     <a href="#">
                         <img class="media-object img-rounded" th:src="${question.user.avatarUrl}" alt="" src="">
                     </a>
                 </div>
+                <!-- 问题描述 -->
                 <div class="media-body">
                     <a th:href="@{/question/{id}(id=${question.question.id})}" class="mouse-hover">
-                        <h4 class="media-heading" th:text="${question.question.title}">快速开始</h4>
+                        <h4 class="media-heading" th:text="${question.question.title.length() > 20 ?question.question.title.substring(0,19)+'...' : question.question.title}">快速开始</h4>
                     </a>
                     [[${question.question.description}]]<br/>
                     <span class="text-desc">
                         • [[${question.question.commentCount}]]个回复 • [[${question.question.viewCount}]]次浏览 • 于[[${#dates.format(question.question.gmtModified,'yyyy年MM月dd日HH时')}]]发布
                     </span>
-                    <span class="glyphicon glyphicon-tag label label-info" style="margin-right: 10px" th:text="${tagName}" th:each="tagName : ${question.question.tag.split(',')}">hh</span>
+                    <!-- 标签 -->
+                    <span class="glyphicon glyphicon-tag label label-info" style="margin-right: 10px" th:text="' '+${tagName}" th:each="tagName : ${question.question.tag.split(',')}">hh</span>
                 </div>
             </div>
             <!-- 分页 -->
@@ -68,8 +73,8 @@
                 </ul>
             </nav>
         </div>
-        <!--  -->
-        <div class="col-lg-3 col-md-12 col-xs-12 col-sm-12" style="margin-top: 20px">
+        <!-- 右侧热门话题 -->
+        <div class="col-lg-3  col-md-12 col-xs-12 col-sm-12" style="background-color: white;border-radius: 15px;margin-left: 40px">
             <h3 style="text-align: center">热门话题</h3>
             <div class="list-group">
                 <a href="#" class="list-group-item a-hover" th:each="hotQuestion,c : ${hotTopic}">

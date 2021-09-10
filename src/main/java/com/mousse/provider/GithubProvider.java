@@ -7,7 +7,9 @@ import okhttp3.*;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 @Component
 public class GithubProvider {
@@ -15,7 +17,12 @@ public class GithubProvider {
     public String getAccessToken(AccessTokenDTO accessTokenDTO) {
          MediaType mediaType = MediaType.get("application/json; charset=utf-8");
 
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectionPool(new ConnectionPool(32, 20, TimeUnit.MILLISECONDS))
+                .protocols(Collections.singletonList(Protocol.HTTP_1_1))
+                .pingInterval(15, TimeUnit.SECONDS)
+                .retryOnConnectionFailure(false)
+                .build();
 
         RequestBody body = RequestBody.create(JSON.toJSONString(accessTokenDTO),mediaType);
         Request request = new Request.Builder()

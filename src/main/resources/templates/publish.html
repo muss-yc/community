@@ -43,7 +43,7 @@
                     <div id="select-tag" style="display: none" onblur="hiddenSelectTag()">
                         <!-- 标签分类 -->
                         <ul class="nav nav-tabs" role="tablist" style="margin-bottom: 15px;" >
-                            <li role="presentation" class="" th:each="tag : ${tags}">
+                            <li role="presentation" th:class="${start.first}?'active':''" th:each="tag,start: ${tags}">
                                 <a role="tab"
                                    data-toggle="tab"
                                    th:href="@{${'#'+tag.categoryName}}"
@@ -54,12 +54,12 @@
                         </ul>
                         <!-- 标签列表 -->
                         <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane " th:id="${tag.categoryName}" th:each="tag : ${tags}">
+                            <div role="tabpanel" class="tab-pane " th:classappend="${start.first}?'active':''"  th:id="${tag.categoryName}" th:each="tag,start: ${tags}">
                                 <span style="margin-right: 10px"
                                       class="label label-info glyphicon glyphicon-tag"
                                       onclick="selectTag(this)"
                                       th:each="tagName : ${tag.tags}"
-                                      th:text="${tagName}"
+                                      th:text="' '+${tagName}"
                                       th:data-tag="${tagName}">spring
                                 </span>
                             </div>
