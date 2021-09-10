@@ -22,4 +22,6 @@ public interface QuestionService extends IService<Question> {
     void updateCommentCountById(int parent_id);
 
     List<Question> selectTagsRegular(String tags,int id);
+
+    List<Question> selectQuestionListByViewCount();
 }

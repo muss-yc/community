@@ -10,7 +10,7 @@
         if (closable === "true") {
             window.close();
             window.localStorage.removeItem("closable");
-            window.localStorage.setItem("reload","true");
+            window.localStorage.setItem("reload", "true");
         }
     }
 </script>
@@ -18,9 +18,9 @@
 <div th:replace="commonCode::common_navigation"></div>
 <!-- 主体 -->
 <div class="container-fluid main">
-    <div class="row" >
+    <div class="row">
         <div class="col-lg-9 col-md-12 col-xs-12 col-sm-12">
-            <h3 ><span class="glyphicon glyphicon-th-list" aria-hidden="true" > 发现</span></h3>
+            <h3><span class="glyphicon glyphicon-th-list" aria-hidden="true"> 发现</span></h3>
             <hr>
             <div class="media" th:each="question : ${questions}">
                 <div class="media-left media-middle">
@@ -36,14 +36,15 @@
                     <span class="text-desc">
                         • [[${question.question.commentCount}]]个回复 • [[${question.question.viewCount}]]次浏览 • 于[[${#dates.format(question.question.gmtModified,'yyyy年MM月dd日HH时')}]]发布
                     </span>
+                    <span class="glyphicon glyphicon-tag label label-info" style="margin-right: 10px" th:text="${tagName}" th:each="tagName : ${question.question.tag.split(',')}">hh</span>
                 </div>
             </div>
             <!-- 分页 -->
             <nav aria-label="Page navigation" style="text-align: center">
-                <ul class="pagination" >
+                <ul class="pagination">
                     <!-- 跳转到所在页的前一页和第一页 -->
                     <li th:if="${current != 1}">
-                        <a  aria-label="Previous" th:href="@{/(current=1)}" >
+                        <a aria-label="Previous" th:href="@{/(current=1)}">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                         <a th:href="@{/(current=${current.longValue()-1})}">
@@ -52,8 +53,8 @@
                     </li>
 
                     <!-- 遍历出所在页的前三页到后三页 -->
-                    <li  th:class="${x == current} ? active : ''" th:each=" x : ${#numbers.sequence(((current.longValue()-3)>0 ? current.longValue()-3:1),((current+3)>pageCount ?pageCount:current+3))}">
-                        <a  th:href="@{/(current=${x})}"  th:text="${x}">1</a>
+                    <li th:class="${x == current} ? active : ''" th:each=" x : ${#numbers.sequence(((current.longValue()-3)>0 ? current.longValue()-3:1),((current+3)>pageCount ?pageCount:current+3))}">
+                        <a th:href="@{/(current=${x})}" th:text="${x}">1</a>
                     </li>
                     <!-- 跳转到所在页的后一页和最后一页 -->
                     <li th:if="${current != pageCount}">
@@ -70,6 +71,12 @@
         <!--  -->
         <div class="col-lg-3 col-md-12 col-xs-12 col-sm-12" style="margin-top: 20px">
             <h3 style="text-align: center">热门话题</h3>
+            <div class="list-group">
+                <a href="#" class="list-group-item a-hover" th:each="hotQuestion,c : ${hotTopic}">
+                    <span th:text="${hotQuestion.title}"></span>
+                    <span th:class="${c.index < 3 } ? 'glyphicon glyphicon-fire':''" style="float: right;color: #fc2562"></span>
+                </a>
+            </div>
         </div>
     </div>
 </div>

@@ -12,4 +12,6 @@ public interface QuestionMapper extends BaseMapper<Question> {
     void updateCommentCountById(int parent_id);
 
     List<Question> selectByTags(@Param("tags") String tags,@Param("id") int id);
+
+    List<Question> selectQuestionListByViewCount();
 }

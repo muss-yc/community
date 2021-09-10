@@ -26,7 +26,7 @@ public class IndexController {
     @GetMapping("/")
     public String index(Model model,
             @RequestParam(name = "current",defaultValue = "1")Long current,
-            @RequestParam(name = "size",defaultValue = "2")Long size) {
+            @RequestParam(name = "size",defaultValue = "4")Long size) {
 
         Page<Question> page = new Page<>(current, size);
         // 调用service层获取QuestionDTO类型的List集合
@@ -38,6 +38,9 @@ public class IndexController {
         model.addAttribute("questions",questionList);
         model.addAttribute("pageCount",pageCount);
         model.addAttribute("current",current);
+        // 获取热门话题
+        List<Question> hotTopic  =  questionService.selectQuestionListByViewCount();
+        model.addAttribute("hotTopic",hotTopic);
         return "index";
     }
 

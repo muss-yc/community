@@ -121,3 +121,33 @@ function collapseComments(e) {
         dataType: "json"
     });
 }
+
+/**
+ * 展示选择标签
+ */
+function showSelectTag() {
+    $("#select-tag").show();
+}
+function hiddenSelectTag() {
+    $("#select-tag").hide();
+}
+
+/**
+ * 添加标签
+ * @param e
+ */
+function selectTag(e) {
+    let value = e.getAttribute("data-tag");
+    let previous = $("#tag").val();
+    if (previous.indexOf(value) === -1) {
+        if (previous) {
+            $("#tag").val(previous+','+value);
+        } else {
+            $("#tag").val(value);
+        }
+    }
+}
+
+function clearTag() {
+    $("#tag").val("");
+}

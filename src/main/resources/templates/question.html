@@ -98,8 +98,12 @@
                 <br>
             </div>
             <hr class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+            <!-- 相关问题 -->
             <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 " style="padding-left: 30px">
                 <h4 style="color:#7ae0d2;">相关问题</h4>
+                <div th:if="${questionList.size() == 0}" class="text-desc">
+                    <h5>暂时没有相关问题~~~</h5>
+                </div>
                 <div class="list-group">
                     <a href="#" class="list-group-item a-hover" th:each="relatedQuesiton : ${questionList}" th:text="${relatedQuesiton.title}"></a>
                 </div>

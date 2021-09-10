@@ -19,4 +19,7 @@
     <select id="selectByTags" resultType="com.mousse.entity.Question">
         select * from question where tag  REGEXP #{tags} and id != #{id} order by  like_count desc
     </select>
+    <select id="selectQuestionListByViewCount" resultType="com.mousse.entity.Question">
+        select * from question order by  view_count desc limit 0,6
+    </select>
 </mapper>

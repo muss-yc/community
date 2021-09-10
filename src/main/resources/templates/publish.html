@@ -15,10 +15,10 @@
             <hr>
             <h4 style="color:red;text-align: center">[[${error}]]</h4>
             <form th:action="@{/publish}" method="post">
-                <input type="hidden" th:value="${question != null ? question.id : ''}" name="id" >
+                <input type="hidden" th:value="${question != null ? question.id : ''}" name="id">
                 <div class="form-group">
                     <label for="title">问题标题</label>
-                    <input type="text" class="form-control" th:value="${question!=null?question.title:''}" name="title" id="title" placeholder="请输入问题标题...">
+                    <input type="text" autocomplete="off" class="form-control" th:value="${question!=null?question.title:''}" name="title" id="title" placeholder="请输入问题标题...">
                 </div>
                 <div class="form-group">
                     <label for="description">问题描述(必填)</label>
@@ -26,7 +26,45 @@
                 </div>
                 <div class="form-group">
                     <label for="tag">添加标签</label>
-                    <input type="text" class="form-control" th:value="${question!=null?question.tag:''}" name="tag" id="tag" placeholder="输入标签，标签之间以逗号隔开">
+                    <div class="input-group col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                        <input type="text"
+                               name="tag"
+                               id="tag"
+                               placeholder="输入标签，标签之间以逗号隔开"
+                               autocomplete="off"
+                               class="form-control"
+                               onfocus="showSelectTag()"
+                               th:value="${question!=null?question.tag:''}"
+                        >
+                        <div class="input-group-addon" style="color: red;background-color: white;border-left: 0;" onclick="clearTag()">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </div>
+                    </div>
+                    <div id="select-tag" style="display: none" onblur="hiddenSelectTag()">
+                        <!-- 标签分类 -->
+                        <ul class="nav nav-tabs" role="tablist" style="margin-bottom: 15px;" >
+                            <li role="presentation" class="" th:each="tag : ${tags}">
+                                <a role="tab"
+                                   data-toggle="tab"
+                                   th:href="@{${'#'+tag.categoryName}}"
+                                   th:aria-controls="${tag.categoryName}"
+                                   th:text="${tag.categoryName}">Home
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- 标签列表 -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane " th:id="${tag.categoryName}" th:each="tag : ${tags}">
+                                <span style="margin-right: 10px"
+                                      class="label label-info glyphicon glyphicon-tag"
+                                      onclick="selectTag(this)"
+                                      th:each="tagName : ${tag.tags}"
+                                      th:text="${tagName}"
+                                      th:data-tag="${tagName}">spring
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-success btn-publish">发布</button>
             </form>
