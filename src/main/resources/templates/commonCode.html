@@ -34,6 +34,9 @@
                 <li th:unless="${session.user == null}">
                     <a th:href="@{/publish}">发布问题</a>
                 </li>
+                <li th:unless="${session.user == null}">
+                    <a th:href="@{/mine/notify}">我的通知 <span style="color: palevioletred;float: right" th:text="${session.get('notifyCount') != null ? session.get('notifyCount') : ''}"></span></a>
+                </li>
                 <li class="dropdown" th:unless="${session.user == null}">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" >
                         [[${session.user.getName()}]] <span class="caret"></span>

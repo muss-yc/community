@@ -1,7 +1,9 @@
 package com.mousse.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.mousse.dto.NotifyVO;
 import com.mousse.dto.UserDTO;
+import com.mousse.entity.Comment;
 import com.mousse.entity.Question;
 import com.mousse.entity.User;
 import com.mousse.service.QuestionService;
@@ -11,11 +13,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -51,6 +56,32 @@ public class MineController {
         UserDTO userDTO = (UserDTO) map.get("userDTO");
         model.addAttribute("userDTO",userDTO);
         return "questionList";
+    }
+
+    @GetMapping("/mine/notify")
+    public String mineNotify(HttpServletRequest request,Model model){
+        Integer notifyCount = (Integer) request.getSession().getAttribute("notifyCount");
+        if (notifyCount == null) {
+            model.addAttribute("message","暂时没有通知~~~");
+        } else {
+            List<NotifyVO> notifyList = new ArrayList<>();
+            List<Comment> newComments = (List<Comment>) request.getSession().getAttribute("newComments");
+            for (Comment newComment : newComments) {
+                NotifyVO notify = new NotifyVO();
+                User user = userService.getById(newComment.getUserId());
+                notify.setName(user.getName());
+                int parentId = newComment.getParentId();
+                Question question = questionService.getById(parentId);
+                notify.setTitle(question.getTitle());
+                notify.setId(parentId);
+                notify.setContent(newComment.getContent());
+                notifyList.add(notify);
+            }
+            model.addAttribute("notifyList",notifyList);
+            request.getSession().setAttribute("notifyCount",null);
+        }
+
+        return "notify";
     }
 
 }

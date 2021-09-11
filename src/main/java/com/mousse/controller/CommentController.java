@@ -46,6 +46,20 @@ public class CommentController {
         comment.setGmtModified(new Date());
         comment.setCommentator(1);
         commentService.insert(comment);
+        if (commentDTO.getType() == 1) {
+            Integer notifyCount = (Integer) request.getSession().getAttribute("notifyCount");
+            if (notifyCount == null) {
+                request.getSession().setAttribute("notifyCount",1);
+            } else {
+                request.getSession().setAttribute("notifyCount",notifyCount+1);
+            }
+            List<Comment> newComments = (List<Comment>) request.getSession().getAttribute("newComments");
+            if (newComments == null) {
+                request.getSession().setAttribute("newComments",new ArrayList<Comment>());
+                newComments = (List<Comment>) request.getSession().getAttribute("newComments");
+            }
+            newComments.add(comment);
+        }
         if (commentDTO.getType() == 2){
             int parentId = commentDTO.getParentId();
             Comment commentServiceById = commentService.getById(parentId);

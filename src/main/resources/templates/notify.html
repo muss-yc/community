@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{commonCode::common_head('通知')}">
+    <title></title>
+</head>
+<body>
+<!-- 导航栏 -->
+<div th:replace="commonCode::common_navigation"></div>
+<!-- 主体 -->
+<div class="container-fluid" style="color:#e5eaec;">
+    <!-- 通知列表 -->
+    <div class="col-lg-8 col-lg-offset-2 col-md-12 col-xs-12 col-sm-12">
+        <h4 th:text="${message}" style="color: #c48383;text-align: center"></h4>
+        <ul class="list-group" th:if="${message == null }" style="color:white;">
+            <h4 style="color: black;text-align: center" th:text="${'共有 '+notifyList.size()+' 条通知'}">asd</h4>
+            <li class="list-group-item" th:each="notify,start : ${notifyList}" style="color: black" th:if="${start.index<6}">
+                <span th:text="${notify.name}"></span>
+                回复了你提出的<a th:href="@{/question/{id}(id=${notify.id})}" th:text="${notify.title}"></a>
+                内容为：<span th:text="${notify.content.length() > 10 ? notify.content.substring(0,10)+'...' : notify.content}"></span>
+            </li>
+            <span class="glyphicon glyphicon-chevron-down"  style="color: black;padding: 15px 0 0 450px;font-size: 20px;"></span>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
