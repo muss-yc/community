@@ -20,9 +20,21 @@
                     <label for="title">问题标题</label>
                     <input type="text" autocomplete="off" class="form-control" th:value="${question!=null?question.title:''}" name="title" id="title" placeholder="请输入问题标题...">
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="publish-editor">
                     <label for="description">问题描述(必填)</label>
-                    <textarea class="form-control" rows="10" th:text="${question!=null?question.description:''}" name="description" id="description" cols="30"></textarea>
+                    <textarea class="form-control" rows="10" style="display: none"  th:text="${question!=null?question.description:''}" name="description" id="description" cols="30"></textarea>
+                    <script type="text/javascript">
+                        $(function() {
+                            let editor = editormd("publish-editor", {
+                                width  : "100%",
+                                height : 350,
+                                path   : "/lib/",
+                                display:0,
+                                watch: false,
+
+                            });
+                        });
+                    </script>
                 </div>
                 <div class="form-group">
                     <label for="tag">添加标签</label>
